@@ -6,9 +6,6 @@ import android.graphics.BitmapShader;
 import android.graphics.Canvas;
 import android.graphics.Matrix;
 import android.graphics.Paint;
-import android.graphics.PorterDuff;
-import android.graphics.PorterDuffXfermode;
-import android.graphics.Xfermode;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
@@ -23,7 +20,6 @@ public class CircleImageView extends AppCompatImageView {
 
     private int mSize;
     private Paint mPaint;
-//    private Xfermode mPorterDuffXfermode;
 
     public CircleImageView(Context context) {
         this(context,null);
@@ -42,8 +38,6 @@ public class CircleImageView extends AppCompatImageView {
         mPaint = new Paint();
         mPaint.setDither(true);
         mPaint.setAntiAlias(true);
-
-//        mPorterDuffXfermode = new PorterDuffXfermode(PorterDuff.Mode.SRC_IN);
     }
 
     @Override
@@ -65,8 +59,7 @@ public class CircleImageView extends AppCompatImageView {
         if (sourceBitmap != null){
             //对图片进行缩放，以适应控件的大小
             Bitmap bitmap = resizeBitmap(sourceBitmap,getWidth(),getHeight());
-//            drawCircleBitmapByXfermode(canvas,bitmap);    //(1)利用PorterDuffXfermode实现,按home键退出然后再进来图片会不显示
-            drawCircleBitmapByShader(canvas,bitmap);    //(2)利用BitmapShader实现
+            drawCircleBitmapByShader(canvas,bitmap);    //利用BitmapShader实现
         }
     }
 
@@ -85,16 +78,6 @@ public class CircleImageView extends AppCompatImageView {
         return Bitmap.createBitmap(sourceBitmap,0,0,width,height,matrix,true);
     }
 
-//    private void drawCircleBitmapByXfermode(Canvas canvas,Bitmap bitmap){
-//        final int sc = canvas.saveLayer(0,0,getWidth(),getHeight(),null,Canvas.ALL_SAVE_FLAG);
-//        //绘制dst层
-//        canvas.drawCircle(mSize / 2,mSize / 2,mSize / 2,mPaint);
-//        //设置图层混合模式为SRC_IN
-//        mPaint.setXfermode(mPorterDuffXfermode);
-//        //绘制src层
-//        canvas.drawBitmap(bitmap,0,0,mPaint);
-//        canvas.restoreToCount(sc);
-//    }
     private void drawCircleBitmapByShader(Canvas canvas,Bitmap bitmap){
         BitmapShader shader = new BitmapShader(bitmap,BitmapShader.TileMode.CLAMP,BitmapShader.TileMode.CLAMP);
         mPaint.setShader(shader);

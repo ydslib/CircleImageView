@@ -14,13 +14,11 @@ import android.graphics.drawable.Drawable;
  * on 2020/3/10.
  */
 public class CircleImageViewDrawable extends Drawable {
-    private Bitmap mBitmap;
     private Paint mPaint;
     private BitmapShader mBitmapShader;
     private int mSize;
     private int mRadius;
     public CircleImageViewDrawable(Bitmap bitmap){
-        this.mBitmap = bitmap;
         mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         mBitmapShader = new BitmapShader(bitmap, Shader.TileMode.CLAMP,Shader.TileMode.CLAMP);
         mPaint.setShader(mBitmapShader);
